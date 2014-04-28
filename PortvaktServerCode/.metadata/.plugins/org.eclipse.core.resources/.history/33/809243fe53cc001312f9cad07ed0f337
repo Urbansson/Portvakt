@@ -1,0 +1,40 @@
+import java.io.*;
+import java.net.*; 
+
+class TCPServer {    
+	public static void main(String argv[]) throws Exception
+	{       
+		String clientSentence;          
+		String capitalizedSentence;  
+
+		ServerSocket serverSocket = new ServerSocket(6780);       
+		Socket clientSocket = null;
+
+		int i = 1;
+		
+		while(i==1)          
+		{
+			clientSocket = serverSocket.accept();
+			System.out.println(clientSocket.getRemoteSocketAddress()+" connected\n");
+
+			clientSocket.close();
+		}
+		
+		serverSocket.close();
+
+//		int i = 1;
+//		
+//		while(i==1)          
+//		{             
+//			Socket connectionSocket = welcomeSocket.accept();             
+//			BufferedReader inFromClient =                
+//					new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+//			DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());           
+//			clientSentence = inFromClient.readLine();          
+//			System.out.println("Received: " + clientSentence);     
+//			capitalizedSentence = clientSentence.toUpperCase() + '\n';    
+//			outToClient.writeBytes(capitalizedSentence);          
+//		}  
+//		welcomeSocket.close();
+	} 
+} 
