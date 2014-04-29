@@ -3,11 +3,10 @@ import socket
 from uuid import getnode as get_mac
 
 class datahandler ():
-    def __init__(self, host, port, updaterate):
+    def __init__(self, host, port):
         threading.Thread.__init__(self)
         self.host = host
         self.port = port
-        self.updaterate = updaterate
         self.go = True
         self.id = get_mac()
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
