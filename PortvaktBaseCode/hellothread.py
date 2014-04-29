@@ -16,11 +16,12 @@ class HelloThread (threading.Thread):
 
     def run(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        print "Starting " + self.name
+        print "Starting hello Thread\n"
         while self.go:
             time.sleep(self.updaterate)
             self.s.sendto(str(self.id),(self.host, self.port))
         self.s.close()
+        print "Hello Thread Done\n"
 
     def stop(self):
         self.go = False

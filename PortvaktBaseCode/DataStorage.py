@@ -10,8 +10,9 @@ addValue = average of previous and new value from sensor
 """
 
 class SensorData():
-    def __init__(self, idMac, sensorType, value):
+    def __init__(self, idMac, idSensor, sensorType, value):
         self.idMac = idMac
+        self.idSensor = idSensor 
         self.sensorType = sensorType
         self.value = value
         #print idMac, sensorType, value
@@ -19,14 +20,17 @@ class SensorData():
     def getIdMac(self):
         return self.idMac
 
+    def getIdSensor(self):
+        return self.idSensor
+    
     def getSensorType(self):
         return self.sensorType
 
     def getValue(self):
-        return self.value
+        return str(self.value)
 
     def addValue(self, newValue):
-        self.value = (self.value + newValue)/2
+        self.value = (int(self.value) + int(newValue))/2
     
         
 """
@@ -44,15 +48,15 @@ class DataStorage():
         self.data = []
         
 
-    def pushData(self, idMac, sensorType, value):
+    def pushData(self, idMac, idSensor,sensorType, value):
         found = False
         for item in self.data:
-            if item.getIdMac() == idMac:
+            if item.getIdMac() == idMac and item.getIdSensor() == idSensor:
                 item.addValue(value)
                 found = True
 
         if(found == False):
-            self.data.append(SensorData(idMac, sensorType, value))
+            self.data.append(SensorData(idMac, idSensor,sensorType, value))
 
     def pullData(self):
         tmp = self.data
@@ -62,7 +66,9 @@ class DataStorage():
     def toString(self):
         string = ''
         for item in self.data:
-            string += '%d:%d:%d,\n' % (item.getIdMac(), item.getSensorType() ,item.getValue())
+            if not string:
+                string = str(item.getIdMac()) + '|'
+            string += '%s:%s:%s|\n' % (item.getIdSensor(), item.getSensorType() ,item.getValue())
         
         return string
             
