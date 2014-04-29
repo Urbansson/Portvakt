@@ -59,7 +59,11 @@ class DataStorage():
         self.data = []
         return tmp
 
-
-
+    def toString(self):
+        string = ''
+        for item in self.data:
+            string += '%d:%d:%d,\n' % (item.getIdMac(), item.getSensorType() ,item.getValue())
+        
+        return string
             
         
