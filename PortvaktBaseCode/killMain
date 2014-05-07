@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pid=$(more pid.tmp)
+kill -9 $pid
+rm pid.tmp
