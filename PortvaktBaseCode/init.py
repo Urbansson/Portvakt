@@ -11,10 +11,10 @@ class init ():
         self.id = get_mac()
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 
-    def run(self):
+    def getData(self):
         self.s.connect((self.host,self.port)) 
         self.s.send(str(self.id)+'\n')
         self.s.send("done"+'\n')
 #recv data
         self.s.close()
-        return 10;
+        return 5, 1;
