@@ -34,3 +34,16 @@ CREATE TABLE T_BASESTATION_INET_ADDR(
 	primary key(BS_ID)
 );
 
+DROP TABLE IF EXISTS T_ALARM_LOGS;
+
+CREATE TABLE T_ALARM_LOGS(
+	LOG_ID	integer auto_increment,
+	BS_ID		bigint,
+	END_ID	varchar(32),
+	CONTENT	varchar(128),
+	HANDLED	bool default false,
+	
+	primary key(LOG_ID),
+	foreign key(BS_ID) REFERENCES T_BASESTATION(BS_ID),
+	foreign key(END_ID) REFERENCES T_END_DEVICE(END_ID)
+);
