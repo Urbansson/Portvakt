@@ -27,3 +27,35 @@ BEGIN
 	select * from AccountBasestations where AccountBasestations.USER_ID = id order by AccountBasestations.BASESTATION_ID ASC;
 END $$
 DELIMITER ;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS setInetAddr $$
+create procedure setInetAddr (in bs_id bigint, in inet_addr varchar(39))
+READS SQL DATA
+BEGIN
+declare k integer;
+select count(*) into k from T_BASESTATION_INET_ADDR where T_BASESTATION_INET_ADDR.BS_ID = bs_id;
+if k > 0 
+	then
+		UPDATE T_BASESTATION_INET_ADDR SET INET_ADDR = inet_addr 
+		where T_BASESTATION_INET_ADDR.BS_ID = bs_id;
+		UPDATE T_BASESTATION_INET_ADDR SET ENTRYTIME = now() 
+		where T_BASESTATION_INET_ADDR.BS_ID = bs_id;
+	else
+		INSERT INTO T_BASESTATION_INET_ADDR(BS_ID, ENTRYTIME, INET_ADDR) values (bs_id, now(), inet_addr);
+	
+end if;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS checkTimeout $$
+create procedure checkTimeout()
+READS SQL DATA
+BEGIN
+	select * from TimeoutInformation where TimeoutInformation.ENTRYTIME < (now() - INTERVAL 20 SECOND);
+END $$
+DELIMITER ;
