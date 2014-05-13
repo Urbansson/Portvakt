@@ -31,3 +31,19 @@ END IF;
 
 END $$
 DELIMITER ;
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS getAccountInformation $$
+
+create procedure getAccountInformation
+(in acc_id integer)
+modifies SQL DATA
+
+BEGIN
+declare i integer;
+
+ select STREET, ZIPCODE, CITY, PHONE, EMAIL from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
+
+END $$
+DELIMITER ;

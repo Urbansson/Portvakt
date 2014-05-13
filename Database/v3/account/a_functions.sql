@@ -155,6 +155,33 @@ $$
 DELIMITER ;
 
 
+#Testad och klar
+
+DROP FUNCTION IF EXISTS changePassword;
+DELIMITER $$
+CREATE FUNCTION changePassword(acc_id varchar(32), oldpass varchar(32), newpass varchar(32))
+  RETURNS boolean
+  LANGUAGE SQL -- This element is optional and will be omitted from subsequent examples
+begin 
+	declare k integer DEFAULT 0;
+	SELECT count(*) into k FROM T_ACCOUNT 
+		where T_ACCOUNT.ACC_ID = acc_id AND T_ACCOUNT.PASSWRD = oldpass;
+
+	IF k = 0 THEN 
+		return FALSE;
+	ELSE
+		
+	
+		update T_ACCOUNT SET PASSWRD = newpass where T_ACCOUNT.ACC_ID = acc_id;
+		return TRUE;
+END IF;	
+END;
+$$
+DELIMITER ;
+
+
+
+
 drop function if exists getFirstName;
 
 DELIMITER $$
@@ -187,6 +214,66 @@ begin
 	else
 		select LNAME into tmpname from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
 		return tmpname;
+
+end if;
+END;
+$$
+DELIMITER ;
+
+
+drop function if exists changeUserAddress;
+DELIMITER $$
+create function changeUserAddress(acc_id integer, street varchar(32), zipcode varchar(32),
+											 city varchar(32), phone varchar(32), email varchar(32))
+returns bool
+begin
+	declare k integer DEFAULT 0;
+	declare tmplength integer default 0;
+	select count(*) into k from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
+	if k = 0 then
+		return false;
+	else
+		
+		if street is not null or LENGTH(street) > 0 then
+			update T_USERINFO SET STREET = street where T_USERINFO.ACC_ID = acc_id;
+		end if;
+		if zipcode is not null or zipcode != '' then
+			update T_USERINFO SET ZIPCODE = zipcode where T_USERINFO.ACC_ID = acc_id;
+		end if;			
+		if city is not null or city != '' then
+			update T_USERINFO SET CITY = city where T_USERINFO.ACC_ID = acc_id;
+		end if;
+		if phone is not null or phone != '' then
+			update T_USERINFO SET PHONE = phone where T_USERINFO.ACC_ID = acc_id;
+		end if;
+		if email is not null or email != '' then
+			update T_USERINFO SET EMAIL = email where T_USERINFO.ACC_ID = acc_id;			
+		end if;
+		return true;
+
+end if;
+END;
+$$
+DELIMITER ;
+
+
+
+drop function if exists getFullName;
+
+DELIMITER $$
+create function getFullName(acc_id integer) returns varchar(64) charset utf8
+begin
+	declare k integer DEFAULT 0;
+	declare fullname varchar(32);
+#	declare lname varchar(32);
+	select count(*) into k from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
+	if k = 0 then
+		return NULL;
+	else
+		select CONCAT(FNAME," ", LNAME) into fullname from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
+#		select LNAME into lname from T_USERINFO where T_USERINFO.ACC_ID = acc_id;
+		
+		return fullname;
 
 end if;
 END;

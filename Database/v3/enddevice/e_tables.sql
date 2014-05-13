@@ -18,6 +18,7 @@ CREATE TABLE T_SENSOR_TYPE(
 	DESCRIPTION	varchar(64),
 	INTERACTIVE bool default false,
 	LIVEDATA		bool default false,
+	HASDATA		bool default false,
 	primary key(SEN_TYPE)
 );
 
@@ -28,7 +29,7 @@ CREATE TABLE T_SENSOR(
 	SENSOR_ID 	integer,
 	END_ID		varchar(32),
 	SEN_TYPE		integer,
-
+	
 	primary key(ID),
 	foreign key(END_ID) references T_END_DEVICE(END_ID) on delete cascade,
 	foreign key(SEN_TYPE) references T_SENSOR_TYPE(SEN_TYPE) on delete cascade
