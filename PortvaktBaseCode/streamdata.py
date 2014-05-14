@@ -40,7 +40,7 @@ class Streamdata(threading.Thread):
                     data = self.lastmessage.readData(macId, sensorId)
                     self.socket.send(str(data) + '\n')
                     #self.socket.send("done\n")
-                    self.condition.wait()
+                    self.condition.wait(5)
         except socket.error, e:
             print "Catching broken pipe"
         self.condition.release()

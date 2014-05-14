@@ -65,20 +65,18 @@ class getData(threading.Thread):
         while self.go:
             data, addr = self.s.recvfrom(1024) # buffer size is 1024 bytes
             #print data
-
             #Stores the data and notifys the streaimg threads that new data is available
             self.condition.acquire()
             self.lastmessage.storeData(data)
             self.condition.notifyAll()
             self.condition.release()
 
-
             self.ds.push(data)
 
             if self.updaterate < time.time()-update:
                 #Sends data to remote server
-                #t1 = threading.Thread(target = sendData, args=(self.ds.toString(), self.remotehost, self.remoteport))
-                #t1.start()
+                t1 = threading.Thread(target = sendData, args=(self.ds.toString(), self.remotehost, self.remoteport))
+                t1.start()
                 print "Data to Server"
                 print self.ds.toString()
                 update = time.time()

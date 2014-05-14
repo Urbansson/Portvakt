@@ -10,6 +10,7 @@ from datahandler import *
 from streamdata import *
 from LastRecivedData import *
 
+#Hello
 def get_ip_address(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     return socket.inet_ntoa(fcntl.ioctl(
@@ -19,8 +20,9 @@ def get_ip_address(ifname):
     )[20:24])
 
 def main():
-
-    ServerAddres = "192.168.3.60"
+ 
+    ServerAddresPortvakt = "server2.portvakt.se"
+    ServerAddres = "130.229.190.178"
            
     lrm = LastRecivedData()
     condition = threading.Condition()
@@ -28,6 +30,7 @@ def main():
     datatimer = 1
 
     """
+    Saved
     Connects to the initation server registrating the divece and getting starting parameters
     """
     start = init(ServerAddres, 6780)
@@ -36,15 +39,16 @@ def main():
     """
     Starts the thread that sends hello messages to server keeping the conenction alive
     """
-    threadHello = HelloThread(ServerAddres, 6781, hellotimer)
-    #threadHello.start()
+    threadHello = HelloThread(ServerAddresPortvakt, 6781, hellotimer)
+    threadHello.start()
 
     """
     Starts the thread that gathers data and sends it to the remote server 
     """
     threadData = getData(ServerAddres, 6782, datatimer, lrm, condition)
     try:
-        threadData.start()
+        pass
+        #threadData.start()
     except (KeyboardInterrupt, SystemExit):
         cleanup_stop_thread();
         sys.exit()

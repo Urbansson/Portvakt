@@ -15,7 +15,7 @@ class SensorData():
         self.idMac = idMac
         self.idSensor = idSensor 
         self.sensorType = sensorType
-        self.value = int(value)
+        self.value = float(value)
         self.nrofvalues = 1
         #print idMac, sensorType, value
 
@@ -34,11 +34,11 @@ class SensorData():
         return str(temp)
 
     def addValue(self, newValue):
-        self.value += int(newValue)
+        self.value += float(newValue)
         self.nrofvalues += 1
         #print str(self.value) + " : " + str(self.nrofvalues)
 
     def setNewValue(self, value):
-        self.value = int(value)
+        self.value = float(value)
         self.nrofvalues = 1
 
