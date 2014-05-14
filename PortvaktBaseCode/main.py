@@ -5,6 +5,7 @@ import socket
 import fcntl
 import struct
 from init import *
+from savePid import *
 from hellothread import *
 from datahandler import *
 from streamdata import *
@@ -20,7 +21,7 @@ def get_ip_address(ifname):
     )[20:24])
 
 def main():
- 
+    savePid()
     ServerAddresPortvakt = "server2.portvakt.se"
     ServerAddres = "130.229.190.178"
            
