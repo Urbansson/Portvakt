@@ -75,6 +75,9 @@ def main():
         if "1|" in request:
             t2 = Streamdata(c,lrm, condition)
             t2.start()
+        
+        if "2|" in request:
+            print "Sending on/off signal"
            
 
 if __name__ == '__main__':
